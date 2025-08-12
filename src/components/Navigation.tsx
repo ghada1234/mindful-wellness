@@ -65,10 +65,7 @@ const Navigation: React.FC<NavigationProps> = ({ children }) => {
     { text: t('navigation.selfLove'), icon: <SelfLoveIcon />, path: '/self-love' },
     { text: t('navigation.aiWellness'), icon: <AIWellnessIcon />, path: '/ai-wellness' },
     { text: t('navigation.videoChat'), icon: <VideoChatIcon />, path: '/video-chat' },
-  ] : [
-    { text: t('navigation.login'), icon: <LoginIcon />, path: '/login' },
-    { text: t('navigation.register'), icon: <RegisterIcon />, path: '/register' },
-  ];
+  ] : [];
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
