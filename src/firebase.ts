@@ -3,13 +3,15 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-  authDomain: "mindful-wellness-app.firebaseapp.com",
-  projectId: "mindful-wellness-app",
-  storageBucket: "mindful-wellness-app.appspot.com",
-  messagingSenderId: "123456789012",
-  appId: "1:123456789012:web:abcdefghijklmnop"
-};
+    apiKey: "AIzaSyC2LhUQRAqa01T9ZQ30RnjPO0KQGj2JOWM",
+    authDomain: "mindful-f910d.firebaseapp.com",
+    projectId: "mindful-f910d",
+    storageBucket: "mindful-f910d.firebasestorage.app",
+    messagingSenderId: "364290161269",
+    appId: "1:364290161269:web:e2ce03a474eed7c0bb563c",
+    measurementId: "G-M91GCL53L3"
+  };
+  
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
