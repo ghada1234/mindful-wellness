@@ -39,15 +39,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const savedUser = localStorage.getItem('mindfulUser');
     if (savedUser) {
       setCurrentUser(JSON.parse(savedUser));
-    } else {
-      // Auto-login for testing - remove this in production
-      const testUser: User = {
-        id: 'test-1',
-        email: 'test@example.com',
-        name: 'Test User',
-      };
-      setCurrentUser(testUser);
-      localStorage.setItem('mindfulUser', JSON.stringify(testUser));
     }
     setLoading(false);
   }, []);
