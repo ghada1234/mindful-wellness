@@ -177,36 +177,103 @@ const Navigation: React.FC<NavigationProps> = ({ children }) => {
         <Toolbar sx={{ 
           minHeight: { xs: 56, sm: 64 },
           px: { xs: 1, sm: 2, md: 3 },
-          justifyContent: 'space-between'
+          justifyContent: 'space-between',
+          alignItems: 'center'
         }}>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { md: 'none' } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography 
-            variant="h6" 
-            noWrap 
-            component="div" 
-            sx={{ 
-              flexGrow: 1,
-              fontSize: { xs: '1.1rem', sm: '1.25rem' },
-              fontWeight: 'bold',
-            }}
-          >
-            {menuItems.find(item => item.path === location.pathname)?.text || t('app.title')}
-          </Typography>
+          {/* Left side - Menu button and title */}
+          <Box sx={{ display: 'flex', alignItems: 'center', flex: 1 }}>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { md: 'none' } }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography 
+              variant="h6" 
+              noWrap 
+              component="div" 
+              sx={{ 
+                fontSize: { xs: '1.1rem', sm: '1.25rem' },
+                fontWeight: 'bold',
+                color: 'text.primary',
+              }}
+            >
+              {menuItems.find(item => item.path === location.pathname)?.text || t('app.title')}
+            </Typography>
+          </Box>
           
-          {/* Language Switcher and Auth Buttons */}
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          {/* Center - Auth Buttons */}
+          <Box sx={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: 2,
+            position: 'absolute',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            zIndex: 1
+          }}>
+            {/* Always show login/register buttons when not logged in */}
+            {!currentUser && (
+              <Box sx={{ display: 'flex', gap: 1.5 }}>
+                <Button
+                  variant="outlined"
+                  size="medium"
+                  startIcon={<LoginIcon />}
+                  onClick={() => navigate('/login')}
+                  sx={{
+                    color: 'text.primary',
+                    borderColor: 'rgba(0,0,0,0.3)',
+                    borderWidth: 2,
+                    '&:hover': {
+                      borderColor: 'primary.main',
+                      backgroundColor: 'rgba(0,0,0,0.04)',
+                      transform: 'translateY(-1px)',
+                    },
+                    fontSize: { xs: '0.8rem', sm: '0.9rem' },
+                    px: { xs: 2, sm: 3 },
+                    py: { xs: 0.75, sm: 1 },
+                    fontWeight: 'medium',
+                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                  }}
+                >
+                  {t('navigation.login')}
+                </Button>
+                <Button
+                  variant="contained"
+                  size="medium"
+                  startIcon={<RegisterIcon />}
+                  onClick={() => navigate('/register')}
+                  sx={{
+                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    color: 'white',
+                    borderWidth: 2,
+                    '&:hover': {
+                      background: 'linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%)',
+                      transform: 'translateY(-2px)',
+                      boxShadow: '0 4px 12px rgba(102, 126, 234, 0.4)',
+                    },
+                    fontSize: { xs: '0.8rem', sm: '0.9rem' },
+                    px: { xs: 2, sm: 3 },
+                    py: { xs: 0.75, sm: 1 },
+                    fontWeight: 'medium',
+                    boxShadow: '0 4px 8px rgba(102, 126, 234, 0.3)',
+                  }}
+                >
+                  {t('navigation.register')}
+                </Button>
+              </Box>
+            )}
+          </Box>
+          
+          {/* Right side - Language Switcher and User Profile */}
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flex: 1, justifyContent: 'flex-end' }}>
             <LanguageSwitcher />
             
-            {/* User Profile or Login/Register Buttons */}
-            {currentUser ? (
+            {/* User Profile when logged in */}
+            {currentUser && (
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <Avatar
                   src={currentUser?.photoURL}
@@ -248,48 +315,6 @@ const Navigation: React.FC<NavigationProps> = ({ children }) => {
                   }}
                 >
                   {t('navigation.logout')}
-                </Button>
-              </Box>
-            ) : (
-              <Box sx={{ display: 'flex', gap: 1 }}>
-                <Button
-                  variant="outlined"
-                  size="small"
-                  startIcon={<LoginIcon />}
-                  onClick={() => navigate('/login')}
-                  sx={{
-                    color: 'text.primary',
-                    borderColor: 'rgba(0,0,0,0.2)',
-                    '&:hover': {
-                      borderColor: 'primary.main',
-                      backgroundColor: 'rgba(0,0,0,0.04)',
-                    },
-                    fontSize: { xs: '0.75rem', sm: '0.875rem' },
-                    px: { xs: 1.5, sm: 2 },
-                    py: { xs: 0.5, sm: 0.75 },
-                  }}
-                >
-                  {t('navigation.login')}
-                </Button>
-                <Button
-                  variant="contained"
-                  size="small"
-                  startIcon={<RegisterIcon />}
-                  onClick={() => navigate('/register')}
-                  sx={{
-                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                    color: 'white',
-                    '&:hover': {
-                      background: 'linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%)',
-                      transform: 'translateY(-1px)',
-                    },
-                    fontSize: { xs: '0.75rem', sm: '0.875rem' },
-                    px: { xs: 1.5, sm: 2 },
-                    py: { xs: 0.5, sm: 0.75 },
-                    boxShadow: '0 2px 8px rgba(102, 126, 234, 0.3)',
-                  }}
-                >
-                  {t('navigation.register')}
                 </Button>
               </Box>
             )}
