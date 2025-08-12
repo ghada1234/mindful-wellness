@@ -138,69 +138,95 @@ const Navigation: React.FC<NavigationProps> = ({ children }) => {
       
       <Divider />
       
-      {!currentUser && (
-        <Box sx={{ p: 2 }}>
-          <Typography 
-            variant="body2" 
-            sx={{ 
-              textAlign: 'center', 
-              color: 'text.secondary',
-              mb: 2,
+      {/* Bottom section - Login/Register or Logout */}
+      <Box sx={{ p: 2 }}>
+        {!currentUser ? (
+          <>
+            <Typography 
+              variant="body2" 
+              sx={{ 
+                textAlign: 'center', 
+                color: 'text.secondary',
+                mb: 2,
+                fontSize: '0.9rem',
+              }}
+            >
+              {t('navigation.welcomeMessage')}
+            </Typography>
+            
+            {/* Login/Register Buttons in Sidebar */}
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+              <Button
+                variant="outlined"
+                fullWidth
+                startIcon={<LoginIcon />}
+                onClick={() => navigate('/login')}
+                sx={{
+                  color: 'text.primary',
+                  borderColor: 'rgba(0,0,0,0.2)',
+                  borderWidth: 2,
+                  '&:hover': {
+                    borderColor: 'primary.main',
+                    backgroundColor: 'rgba(0,0,0,0.04)',
+                    transform: 'translateY(-1px)',
+                  },
+                  fontSize: '0.9rem',
+                  py: 1,
+                  fontWeight: 'medium',
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                }}
+              >
+                {t('navigation.login')}
+              </Button>
+              <Button
+                variant="contained"
+                fullWidth
+                startIcon={<RegisterIcon />}
+                onClick={() => navigate('/register')}
+                sx={{
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  color: 'white',
+                  borderWidth: 2,
+                  '&:hover': {
+                    background: 'linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%)',
+                    transform: 'translateY(-2px)',
+                    boxShadow: '0 4px 12px rgba(102, 126, 234, 0.4)',
+                  },
+                  fontSize: '0.9rem',
+                  py: 1,
+                  fontWeight: 'medium',
+                  boxShadow: '0 4px 8px rgba(102, 126, 234, 0.3)',
+                }}
+              >
+                {t('navigation.register')}
+              </Button>
+            </Box>
+          </>
+        ) : (
+          /* Logout Button when logged in */
+          <Button
+            variant="outlined"
+            fullWidth
+            startIcon={<LogoutIcon />}
+            onClick={handleLogout}
+            sx={{
+              color: 'error.main',
+              borderColor: 'error.main',
+              borderWidth: 2,
+              '&:hover': {
+                backgroundColor: 'error.main',
+                color: 'white',
+                transform: 'translateY(-1px)',
+              },
               fontSize: '0.9rem',
+              py: 1,
+              fontWeight: 'medium',
             }}
           >
-            {t('navigation.welcomeMessage')}
-          </Typography>
-          
-          {/* Login/Register Buttons in Sidebar */}
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-            <Button
-              variant="outlined"
-              fullWidth
-              startIcon={<LoginIcon />}
-              onClick={() => navigate('/login')}
-              sx={{
-                color: 'text.primary',
-                borderColor: 'rgba(0,0,0,0.2)',
-                borderWidth: 2,
-                '&:hover': {
-                  borderColor: 'primary.main',
-                  backgroundColor: 'rgba(0,0,0,0.04)',
-                  transform: 'translateY(-1px)',
-                },
-                fontSize: '0.9rem',
-                py: 1,
-                fontWeight: 'medium',
-                boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-              }}
-            >
-              {t('navigation.login')}
-            </Button>
-            <Button
-              variant="contained"
-              fullWidth
-              startIcon={<RegisterIcon />}
-              onClick={() => navigate('/register')}
-              sx={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                color: 'white',
-                borderWidth: 2,
-                '&:hover': {
-                  background: 'linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%)',
-                  transform: 'translateY(-2px)',
-                  boxShadow: '0 4px 12px rgba(102, 126, 234, 0.4)',
-                },
-                fontSize: '0.9rem',
-                py: 1,
-                fontWeight: 'medium',
-                boxShadow: '0 4px 8px rgba(102, 126, 234, 0.3)',
-              }}
-            >
-              {t('navigation.register')}
-            </Button>
-          </Box>
-        </Box>
-      )}
+            {t('navigation.logout')}
+          </Button>
+        )}
+      </Box>
     </Box>
   );
 
@@ -278,26 +304,6 @@ const Navigation: React.FC<NavigationProps> = ({ children }) => {
                 >
                   {currentUser?.name}
                 </Typography>
-                <Button
-                  variant="outlined"
-                  size="small"
-                  startIcon={<LogoutIcon />}
-                  onClick={handleLogout}
-                  sx={{
-                    color: 'text.secondary',
-                    borderColor: 'rgba(0,0,0,0.1)',
-                    '&:hover': {
-                      borderColor: 'error.main',
-                      color: 'error.main',
-                      backgroundColor: 'rgba(244, 67, 54, 0.04)',
-                    },
-                    fontSize: { xs: '0.7rem', sm: '0.75rem' },
-                    px: { xs: 1, sm: 1.5 },
-                    py: { xs: 0.25, sm: 0.5 },
-                  }}
-                >
-                  {t('navigation.logout')}
-                </Button>
               </Box>
             )}
           </Box>
